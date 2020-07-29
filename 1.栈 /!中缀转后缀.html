@@ -12,7 +12,7 @@
 
 </html>
 
-<script type="text/javascript">
+<script type="module">
   import { Stack } from './stack.js'
   
   const priority = {
@@ -27,6 +27,30 @@
     let stack = new Stack()
     
     let list = []
-    // for ()
+    for (let i = 0; i < arr.length; i ++) {
+      let item = arr[i]
+      if (!isNaN(item)) { // 数字直接进list
+        list.push(item)
+      } else if (item === '(') { // (直接进栈
+        stack.push(item)
+      } else if (item === ')') {
+        while(stack.top() !== '(') {
+          list.push(stack.pop())
+        }
+        stack.pop()
+      } else { // +-*/ --核心 1.先与栈中符号比较, 2.当前级别高, 将栈中低于它级别的push到list, 3.自己入栈
+        while (!stack.isEmpty() && priority[stack.top()] > 0 && priority[stack.top()] > priority[item]) {
+          list.push(stack.pop())
+        }
+        stack.push(item)
+      }
+    }
+    while (!stack.isEmpty()) {
+      list.push(stack.pop())
+    }
+    return list
   }
+  // (1+(4*5+3)-3)/(9+8)
+  var exp = ["(","1","+","(","4","*","5","+","3",")","-","3",")","/","(","9","+","8",")"]
+  console.log(midTBack(exp))
 </script>
