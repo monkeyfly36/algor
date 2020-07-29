@@ -1,0 +1,31 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-28 10:15:52
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <div>
+    逆波兰表达式 ["1","6","3","/","+"] --> 1 + 6 / 3
+  </div>
+</html>
+
+<script type="text/javascript">
+  import { Stack } from './stack.js'
+  // 逆波兰表达式计算 ["1","6","3","/","+"]--> 1 + 6 / 3
+  function nibo (arrNiBo) {
+    let stack = new Stack()
+    for (let i = 0; i < arrNiBo.length; i++) {
+      if (['+', '-', '*', '/'].indexOf(arrNiBo[i]) > -1) {
+        const val1 = parseInt(stack.pop())
+        const val2 = parseInt(stack.pop())
+        let comVal = eval(val2 + arrNiBo[i] + val1)
+        stack.push(comVal.toString())
+      } else {
+        stack.push(arrNiBo[i])
+      }
+    }
+    return stack.pop()
+  }
+</script>

@@ -1,0 +1,36 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-28 16:13:36
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <div>
+    斐波那契: 斐波那契数列的前两项是 1 1, 此后的每一项都是该项前面两项之和,
+            即f(n) = f(n-1) + f(n-2)
+  </div>
+</html>
+
+<script type="module">
+  import { Queue } from './queue.js'
+  
+  // 斐波那契
+  function fibonacci(n) {
+    let queue = new Queue()
+    queue.enqueue(1)
+    queue.enqueue(1)
+    
+    var index = 0 // 计数, 如n=3只要1次
+    while (index < n-2) {
+      // 删除头元素, 头元素与尾元素的和放入队列(队列一共两值)
+      var delItem = queue.dequeue()
+      var headItem = queue.head()
+      var nextItem = headItem + delItem
+      queue.enqueue(nextItem)
+      index ++
+    }
+    return queue.tail()
+  }
+  console.log(fibonacci(10))
+</script>

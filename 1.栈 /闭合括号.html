@@ -1,0 +1,33 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-26 21:01:38
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  字符串'(s(d))))'--()可抵消，计算可以完全闭合抵消
+</div>
+</html>
+
+<script type="text/javascript">
+  import { Stack } from './stack.js'
+  // 字符串'(s(d))))'--()可抵消，计算可以完全闭合抵消
+  function isLegal(item) {
+    let stack = new Stack()
+    for (let i = 0; i < item.length; i++) { 
+      if (item[i]==='(' ) { 
+        stack.push('(') 
+      } else if (item[i]===')' ) { 
+        if (stack.isEmpty()) {
+          return false 
+        } else { 
+          stack.pop() 
+        } 
+      } 
+    } 
+    return stack.isEmpty() 
+  }
+  console.log(isLegal('(())'))
+</script>

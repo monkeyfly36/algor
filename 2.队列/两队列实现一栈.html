@@ -1,0 +1,42 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-28 15:45:32
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  用两个栈来模拟一个队列, 实现enqueue，dequeue， head这三个方法
+</div>
+
+</html>
+
+<script type="module">
+  import { Queue } from './queue.js'
+  
+  // 杨辉三角
+  function yanghui(n) {
+    let queue = new Queue()
+    queue.enqueue(1)
+
+    for (let i = 0; i < n; i++) {
+      // !!!控制打印行数
+      var line = "" // 行内容
+      var pre = 0   // 缓存第一个加数
+      for (let j = 0; j <= i; j++) {
+        // !!!控制每行的内容
+        // line为当前行将要显示的问题
+        var item = queue.dequeue()
+        line += item + '   '
+        // 计算下一行--核心
+        var value = pre + item
+        pre = item
+        queue.enqueue(value)
+      }
+      queue.enqueue(1) // for循环没有计算最后一个数
+      console.log(line)
+    }  
+  }
+  console.log(yanghui(10))
+</script>

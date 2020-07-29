@@ -1,0 +1,43 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-07-26 20:40:59
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-26 21:00:45
+--> 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  O(1)查找数组中最小值
+</div>
+
+</html>
+
+<script type="module">
+  import { Stack } from './stack.js'
+
+  function minStack() {
+    let minStack = new Stack()
+    
+    this.push = (item) => {
+      if (minStack.isEmpty() || item < minStack.top()) {
+        minStack.push(item)
+      } else { //不管是不是最小都要压栈,否则pop后最小值不确定
+        minStack.push(minStack.top())
+      }
+    }
+    this.pop = () => {
+      minStack.pop()
+    }
+    this.min = () => {
+      return minStack.top()
+    }
+  }
+  let stack1 = new minStack()
+  stack1.push(3)
+  stack1.push(2)
+  console.log(stack1.min())
+  stack1.push(1)
+  console.log(stack1.min())
+  stack1.pop()
+  console.log(stack1.min())
+</script>

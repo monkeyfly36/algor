@@ -1,0 +1,40 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-28 14:10:28
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <div>
+    约瑟夫环: 每隔两个数删掉一个数，到末尾时循环至开头继续进行
+    -->有一个数组a[100]存放0--99, 求最后一个被删掉的数
+  </div>
+</html>
+
+<script type="module">
+  import { Queue } from './queue.js'
+  
+  // 约瑟夫环
+  function delRing(arr) {
+    let queue = new Queue()
+    for(let i=0; i < arr.length; i++){ // 排队
+      queue.enqueue(arr[i])
+    }
+    var index = 0 // 计数, 头部弹出, 能被3整除则继续放到队列尾部
+    while (queue.size() !== 1) {
+      var item = queue.dequeue()
+      index ++
+      if (index % 3 !== 0) {
+        queue.enqueue(item)
+      }
+    }
+    return queue.head()
+  }
+  // 准备好0-100的数组
+  var arr = []
+  for (let i = 0; i < 6; i++) {
+    arr.push(i)
+  }
+  console.log(delRing(arr))
+</script>

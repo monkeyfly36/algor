@@ -1,0 +1,56 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-28 16:13:24
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <div>
+    用两个栈来模拟一个队列, 实现enqueue, dequeue, head这三个方法
+  </div>
+</html>
+
+<script type="module">
+  import { Stack } from './stack.js'
+  
+  // 杨辉三角
+  function stackTQueue() {
+    var stack1 = new Stack() // 存数据
+    var stack2 = new Stack() // 核心--stack1倒入stack2, 那么原stack1栈底为stack2栈顶, 可操作
+    
+    this.enqueue = function (item) { //
+      stack1.push(item)
+    }
+    this.dequeue = function () {
+      if (stack1.isEmpty() && stack2.isEmpty()) return null
+      if (stack2.isEmpty()) { // 核心--stack2空了以后再倒, 保证之前进来顺序 原栈底-->现栈顶
+        while (!stack1.isEmpty()) {
+          stack2.push(stack1.pop())
+        }
+      }
+      return stack2.pop()
+    }
+    this.head = function () {
+      if (stack1.isEmpty() && stack2.isEmpty()) return null
+      if (stack2.isEmpty()) {
+        while (!stack1.isEmpty()) { // 核心--stack2空了以后再倒, 保证之前进来顺序 原栈底-->现栈顶
+          stack2.push(stack1.pop())
+        }
+      }
+      return stack2.top()
+    }
+  }
+  var sq = new stackTQueue()
+  sq.enqueue(1)
+  sq.enqueue(2)
+  sq.enqueue(3)
+  console.log(sq.head())
+  sq.dequeue()
+  sq.enqueue(4)
+  console.log(sq.head())
+  sq.dequeue()
+  console.log(sq.head())
+  console.log(sq.dequeue())
+  console.log(sq.dequeue())
+</script>
