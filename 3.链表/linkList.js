@@ -14,7 +14,7 @@ export const LinkList = function () {
   var tail = null
 
   
-  this.append = (data) => {
+  this.append = (data) => { // 链表末尾添加
     var node = new Node(data)
     if (head === null) { // 空链表
       head = node
@@ -24,19 +24,41 @@ export const LinkList = function () {
       tail = node
     }
     length ++
-    return true
+    // return true
   }
   this.print = () => {
     var curNode = head
     while (curNode) {
       console.log(curNode.data);
       curNode = curNode.next
-
     }
   }
-  // this.insert = (data, index) => {
-
-  // }
+  // var
+  this.insert = (index, data) => { // 指定位置插入
+    if (index < 0 || index > length) {
+      return false
+    } else if (index === length) {
+      return this.append()
+    } else {
+      var node = new Node(data)
+      if (index === 0) {
+        node.next = head
+        head = node
+      } else {
+        var i = 1
+        var preNode = head 
+        while (i < index) {
+          i ++
+          preNode = preNode.next
+        }
+        var nextNode = preNode.next // 暂存插入位置后节点
+        preNode.next = node // 重新定义 插入位置前节点的next
+        node.next = nextNode // 定义 新节点的next  
+      }
+    }
+    length ++
+    // return true
+  }
   // this.remove = (index) => {
 
   // }
