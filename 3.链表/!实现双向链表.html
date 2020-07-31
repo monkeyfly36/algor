@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  实现双向链表, append, insert, remove, 其他方法能力足够强可以一并实现
+</div>
+</html>
+
+<script type="module">
+  // 待补完
+  function DoubleLinkList () {
+    var Node = function (data) {
+      this.data = data
+      this.pre = null
+      this.next = null
+    }
+    var length = 0
+    var head = null
+    var tail = null
+
+    this.append = (data) => {
+      var node = new Node(data)
+      if (!head) {
+        head = node
+        tail = node
+      } else {
+        tail.next = node
+        node.pre = tail
+        tail = node
+      }
+      length ++
+      return true
+    }
+    this.insert = (index, data) => {
+      var node = new Node(data)
+      if (index < 0 || index > length) {
+        return false
+      } else if (index === length) {
+        this.append(data)
+      } else if (index === 0) {
+        
+      }
+    }
+    this.remove = (index) => {
+
+    }
+  }
+</script>

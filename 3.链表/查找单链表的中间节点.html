@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  查找单链表的中间节点--归并, 双游标
+</div>
+
+</html>
+
+<script type="module">
+  import { LinkList } from './linkList.js'
+  var linkList = new LinkList()
+  linkList.append(1)
+  linkList.append(3)
+  linkList.append(7)
+  linkList.append(2)
+  linkList.append(4)
+  linkList.append(5)
+  // linkList.append(10)
+
+  function find_middle(head) {
+    var fast = head
+    var slow = head
+
+    while (fast.next) {
+      fast = fast.next.next
+      slow = slow.next
+    }
+    return slow.data
+  }
+  console.log(find_middle(linkList.getNode(0))) // 偶数报错
+</script>

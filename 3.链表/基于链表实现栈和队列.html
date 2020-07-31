@@ -1,0 +1,62 @@
+<!--
+ * @Author: Stephen
+ * @Date: 2020-05-26 15:39:56
+ * @LastEditors: Stephen
+ * @LastEditTime: 2020-07-28 14:10:28
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <div>
+    基于链表实现栈和队列
+  </div>
+</html>
+
+<script type="module">
+  import { LinkList } from './linkList.js'
+
+  function Stack () {
+    var linkList = new LinkList()
+    this.push = (item) => {
+      return linkList.push(item)
+    }
+    this.pop = () => {
+      return linkList.remove_tail()
+    }
+    this.top = () => {
+      return linkList.tail()
+    }
+    this.length = () => {
+      return linkList.length()
+    }
+    this.clear = () => {
+      return linkList.clear()
+    }
+    this.isEmpty = () => {
+      return linkList.isEmpty()
+    }
+  }
+  function Queue () {
+    var linkList = new LinkList()
+    this.enqueue = (item) => {
+      return linkList.push(item)
+    }
+    this.dequeue = () => {
+      return linkList.remove_head()
+    }
+    this.head = () => {
+      return linkList.head()
+    }
+    this.tail = () => {
+      return linkList.tail()
+    }
+    this.size = () => {
+      return linkList.length()
+    }
+    this.clear = () => {
+      return linkList.clear()
+    }
+    this.isEmpty = () => {
+      return linkList.isEmpty()
+    }
+  }
+</script>

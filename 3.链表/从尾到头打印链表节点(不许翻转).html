@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  从尾到头打印链表节点(不许翻转)
+</div>
+
+</html>
+
+<script type="module">
+  import { LinkList } from './linkList.js'
+  var linkList = new LinkList()
+  linkList.append(1)
+  linkList.append(2)
+  linkList.append(3)
+  linkList.append(4)
+  linkList.append(5)
+
+  function reverse_print(head) {
+    // 中止条件
+    if (!head) {
+      return null
+    } else {
+      reverse_print(head.next) // 甩锅, 给别人做
+      console.log(head.data) // 后⾯的都打印完了,给自己做
+    }
+  }
+  reverse_print(linkList.getNode(0))
+</script>

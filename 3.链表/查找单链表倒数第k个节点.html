@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<div>
+  查找单链表倒数第k个节点--归并, 双游标
+</div>
+
+</html>
+
+<script type="module">
+  import { LinkList } from './linkList.js'
+  var linkList = new LinkList()
+  linkList.append(1)
+  linkList.append(3)
+  linkList.append(7)
+  linkList.append(2)
+  linkList.append(4)
+  linkList.append(5)
+
+  function reverse_find (head, k) {
+    var i = k
+    var fast = head
+    var slow = head
+
+    while (i > 0 && fast) { // fast先走k步
+      fast = fast.next
+      i--
+    }
+    // fast和slow一起走
+    if (i !== 0) { // 说明链长度不够走k步
+      return null
+    } else { // 一起走, fast走完取slow的值
+      while(fast) {
+        fast = fast.next
+        slow = slow.next
+      }
+    }
+    return slow.data
+  }
+  console.log(reverse_find(linkList.getNode(0), 6))
+</script>
