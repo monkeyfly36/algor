@@ -24,7 +24,7 @@ export const LinkList = function () {
       tail = node
     }
     length ++
-    // return true
+    return true
   }
   this.print = () => {
     var curNode = head
@@ -57,11 +57,49 @@ export const LinkList = function () {
       }
     }
     length ++
-    // return true
+    return true
   }
-  // this.remove = (index) => {
+  this.remove = (index) => {
+    if (index < 0 || index >= length) {
+      return null
+    } else {
+      var delNode = null
+      if (index === 0) {
+        delNode = head
+        head = head.next
+      } else {
+        var delIndex = 0
+        var preNode = null
+        var curNode = head
+        while (delIndex < index) {
+          delIndex ++
+          preNode = curNode // 核心--记录两个数据，前节点和被删节点，要用他们的next
+          curNode = curNode.next
+        }
+        delNode = curNode
+        preNode.next = curNode.next // 核心实现
 
-  // }
+        if (curNode.next === null) { // 边界条件--删除最后一位
+          tail = preNode
+        }
+      }
+    }
+    length --
+    delNode.next = null // delNode可以不写，但c++指针会报错
+    return delNode.data // 有返回值，返回当前节点数据
+  }
+  this.get = (index) => {
+    if (index < 0 || index >= length) {
+      return null
+    }
+    var i = 0
+    var node = head
+    while (i < index) {
+      i ++
+      node = node.next
+    }
+    return node.data
+  }
   // this.remove_head = () => {
 
   // }
