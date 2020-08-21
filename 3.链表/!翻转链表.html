@@ -16,11 +16,11 @@
   linkList.append(7)
   linkList.append(9)
 
-  function print(node){
-    var	curr_node	=	node
-    while(curr_node){
-  		console.log(curr_node.data)
-  	  curr_node	=	curr_node.next
+  function print(node) {
+    var curr_node = node
+    while (curr_node) {
+      console.log(curr_node.data)
+      curr_node = curr_node.next
     }
   }
 
@@ -33,7 +33,7 @@
   //   var	curr_node	=	head //	当前要翻转的节点
   //   while(curr_node){
   //     var	next_node	=	curr_node.next; // 缓存下⼀个节点
-	// 		curr_node.next	=	pre_node; // 核心--对当前节点进⾏翻转, 先翻转, 后定义curr_node
+  // 		curr_node.next	=	pre_node; // 核心--对当前节点进⾏翻转, 先翻转, 后定义curr_node
   //
   //     pre_node	=	curr_node; //	向后滑动重新定义pre_node
   //     curr_node	=	next_node; //	向后滑动重新定义curr_node
@@ -44,18 +44,18 @@
   // print(reverse_iter(linkList.getNode(0)))
 
   // 递归--核心: 1.找到什么是自己做, 什么是别人做 2.找到递归中止条件
-  function reverse_digui(head){
+  function reverse_digui(head) {
     // 如果head	为null
-    if(!head){
+    if (!head) {
       return null
     }
-    if(head.next === null){
+    if (head.next === null) {
       return head
     }
     // 从下⼀个节点开始进⾏翻转
-    var	new_head = reverse_digui(head.next)
-    head.next.next	=	head //	把当前节点连接到新链表上
-    head.next	= null // 关键--否则死循环; 下一循环重新定义head.next-->head.next.next, =null是照顾头节点翻转后next为null
+    var new_head = reverse_digui(head.next)
+    head.next.next = head //	把当前节点连接到新链表上
+    head.next = null // 关键--否则死循环; 下一循环重新定义head.next-->head.next.next, =null是照顾头节点翻转后next为null
     return new_head
   }
   print(reverse_digui(linkList.getNode(0)))
