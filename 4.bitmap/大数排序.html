@@ -1,0 +1,25 @@
+
+<html>
+    <div>大数排序--有多达10亿无序整数，已知最大值为15亿，请对这个10亿个数进行排序</div>
+</html>
+
+<script type="module">
+// 思路: 为方便演示，已知数组最大值为99。1.放bitmap 2.bitmap判断值是否存在 3.放sort_arr
+import { BitMap } from './bitMap.js'
+
+var arr = [0, 6, 88, 7, 73, 34, 10, 99, 22]
+var sort_arr = []
+
+var bit_map = new BitMap(4)
+for (let i = 0; i<arr.length; i++){ // 1.将现有数组转为bitmap数组，体积变为1/32
+    bit_map.add(arr[i])
+}
+
+for (let i = 0; i< 100; i++) { 
+    if (bit_map.isExist(i)) { // bitmap判断值是否存在
+        sort_arr.push(i) // 放sort_arr
+    }
+}
+
+console.log(sort_arr)
+</script>
