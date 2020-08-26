@@ -1,6 +1,11 @@
-// 注：BitMap只能存储表示某个数是否存在，可以用于大数据去重，大数据排序，两个集合取交集
+<html>
+    <div>
+        有一个数组，内容为[1, 3, 4, 5, 7, 4, 8, 9, 2, 9]，有些数值是重复出现的，
+        请你改造BitMap类，增加一个isRepeat(member)方法，判断member是否重复出现，并利用该方法找出数组中不重复的数
+    </div>
+</html>
 
-// 题：bitmap实现add和isExit方法
+<script type="module">
 export const BitMap = function (size) {
     var arr = new Array(size)
     for (let i = 0; i < size; i++) {
@@ -18,13 +23,8 @@ export const BitMap = function (size) {
         let bitIndex = Math.floor(data % 32)
         return ((arr[arrIndex] & 1 << bitIndex) !== 0) ? true : false
     }
+
+    this.isRepeat = function (data) {
+    }
 }
-// 测试0-100, 4×32 > 100, 所以size为4
-// var bit_map = new BitMap(4);
-// var arr = [0, 3, 5, 6, 9, 34, 23, 78, 99];
-// for (var i = 0; i < arr.length; i++) {
-//     bit_map.add(arr[i]);
-// }
-// console.log(bit_map.isExist(3));
-// console.log(bit_map.isExist(7));
-// console.log(bit_map.isExist(78));
+</script>

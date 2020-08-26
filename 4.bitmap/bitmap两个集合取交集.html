@@ -1,0 +1,29 @@
+<html>
+    <div>
+        两个数组，内容分别为[1, 4, 6, 8, 9, 10, 15], [6, 14, 9, 2, 0, 7]，
+        请用BitMap计算他们的交集
+    </div>
+</html>
+
+<script type="module">
+import { BitMap } from './bitMap.js'
+
+function getMixed(arr1, arr2) {
+    var bit_map = new BitMap()
+    var arr = []
+    for (let i = 0; i < arr1.length; i++) { // arr1构建bitmap
+        bit_map.add(arr1[i])
+    }
+
+    for (let i = 0; i < arr2.length; i++) { // 判断arr2在不在bitmap中
+        if (bit_map.isExist(arr2[i])) {
+            arr.push(arr2[i])
+        }
+    }
+
+    return arr
+}
+
+var arr1 = [1, 4, 6, 8, 9, 10, 15], arr2 = [6, 14, 9, 2, 0, 7]
+console.log(getMixed(arr1, arr2))
+</script>
