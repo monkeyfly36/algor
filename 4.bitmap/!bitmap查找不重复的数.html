@@ -2,6 +2,7 @@
     <div>
         有一个数组，内容为[1, 3, 4, 5, 7, 4, 8, 9, 2, 9]，有些数值是重复出现的，
         请你改造BitMap类，增加一个isRepeat(member)方法，判断member是否重复出现，并利用该方法找出数组中不重复的数
+        思路：一个bit只有2种状态表示存在与否，要表示是否重复需要2个bit
     </div>
 </html>
 
@@ -13,18 +14,39 @@ export const BitMap = function (size) {
     }
 
     this.add = function (data) {
-        let arrIndex = Math.floor(data / 32)
-        let bitIndex = Math.floor(data % 32)
-        arr[arrIndex] = arr[arrIndex] | 1 << bitIndex
+        let arrIndex = Math.floor(data / 16)
+        let bitIndex = data % 16
+        if (this.isExist(data)) {
+            arr[arrIndex] = arr[arrIndex] | 1 << (bitIndex*2 + 1)
+        } else {
+            arr[arrIndex] = arr[arrIndex] | 1 << bitIndex*2
+        }
     }
 
     this.isExist = function (data) {
-        let arrIndex = Math.floor(data / 32)
-        let bitIndex = Math.floor(data % 32)
-        return ((arr[arrIndex] & 1 << bitIndex) !== 0) ? true : false
+        let arrIndex = Math.floor(data / 16)
+        let bitIndex = data % 16
+        return ((arr[arrIndex] & 1 << bitIndex*2) !== 0) ? true : false
     }
 
     this.isRepeat = function (data) {
+        let arrIndex = Math.floor(data / 16)
+        let bitIndex = data % 16
+        return ((arr[arrIndex] & 1 << (bitIndex*2 + 1)) !== 0) ? true : false
     }
 }
+
+var arr = [1, 3, 4, 5, 7, 4, 8, 9, 2, 9];
+var bit_map = new BitMap(2);
+for(var i = 0; i < arr.length; i++){
+    bit_map.add(arr[i]);
+}
+console.log(bit_map.isExist(9))
+var _arr = []
+for(var i = 0; i <=9; i++){
+    if(!bit_map.isRepeat(arr[i])){
+        _arr.push(arr[i]);
+    }
+}
+console.log(_arr);
 </script>
