@@ -11,36 +11,24 @@ function BinaryTree() {
     this.root = null // 1.根结点 2.方便打印查看树结构
 
     // 创建树, 并插入节点
-    var curNode = null // 闭包存储临时变量
     this.insert = function (data) {
         var newNode = new Node(data)
+
         if (this.root == null) {
             this.root = newNode
-            curNode = this.root
             return
         }
-        // 递归比较大小
-        if (newNode.data < curNode.data) { // 插入左孩子
-            if (curNode.left === null) {
-                curNode.left = newNode
-                curNode = this.root
-                return
-            } else {
-                curNode = curNode.left
-                this.insert(data)
-            }
-        } else {
-            if (curNode.right === null) { // 插入右孩子
-                curNode.right = newNode
-                curNode = this.root
-                return
-            } else {
-                curNode = curNode.right
-                this.insert(data)
-            }
-        }
-    }
 
+        insertNode(this.root, newNode)
+        // if (data < this.root.data) {
+        //     insertNode(node.left, data)
+        // } else {
+        //     insertNode(node.right, data)
+        // }
+        // this.insertNode(node.left, data)
+
+       
+    }
     // 中序--先打印左, 再中, 再右--升序
     this.in_order = function (node) {
         if (node === null) {
@@ -68,58 +56,78 @@ function BinaryTree() {
         this.back_order(node.right)
         console.log(node.data)
     }
-
+    // 查看树的高度
+    this.height = function () {
+        return getHeight(this.root)
+    }
+    // 查找节点的高度
+    this.nodeHeight= function (data) {
+        return getNodeHeight(this.root, data)
+    }
     // 查找--最小值, 最大值, 是否存在--小于节点, 找左边;大于节点, 找右边;
     this.min = function (node) {
-        if (node === null) {
-            return null
-        }
-
-        while (node && node.left) {
-            node = node.left
-        }
-        return node.data
+        if (node === null) return null
+        return node.left ? this.min(node.left) : node.data
     }
     this.max = function (node) {
-        if (node === null) {
-            return null
-        }
-
-        while (node && node.right) {
-            node = node.right
-        }
-        return node.data
+        if (node === null) return null
+        return node.right ? this.max(node.right) : node.data
     }
     this.search = function (data) {
         var node = this.root
         return SearchNode(node, data)
     }
+
     // 删除节点
     this.remove = function (data) {
         var node = this.root
         return RemoveNode(node, data)
     }
-    this.findMidNode = function (data) {
-
-    }
 }
 
-function SearchNode (node, data) {
-    if (node === null) {
-        console.log('不存在')
-        return false // ???不打印
-    }
-
-    if (data === node.data) {
-        console.log('存在')
-        return true  // ???不打印
-    } else if (data < node.data) {
-        node = node.left
-        SearchNode(node, data)
+// 插入节点
+function insertNode(node, newNode) {
+     // 递归比较大小
+     if (newNode.data < node.data) { // 插入左孩子
+        if (node.left === null) {
+            node.left = newNode
+            return
+        } else {
+            insertNode(node.left, newNode)
+        }
     } else {
-        node = node.right
-        SearchNode(node, data)
+        if (node.right === null) { // 插入右孩子
+            node.right = newNode
+            return
+        } else {
+            insertNode(node.right, newNode)
+        }
     }
+}
+// 树的高度
+function getHeight(node) {
+    if (node === null) return 0
+
+    let left = getHeight(node.left)
+    let right = getHeight(node.right)
+    if (left >= right) {
+        return left + 1
+    } else {
+        return right + 1
+    }
+}
+// 查找节点的高度
+this.getNodeHeight= function (node, data) {
+
+}
+// 查找存在与否
+function SearchNode (node, data) {
+    if (node === null) return false
+        // return false // ???不打印--在未被函数包裹的if语句中，内部是不能使用return作为结束的（貌似是新标准），但可以使用break来中断执行的语句；
+    // }
+    return data === node.data ? true 
+                              : (data < node.data ? SearchNode(node.left, data) 
+                                                  : SearchNode(node.right, data))
 }
 // 删除
 function RemoveNode(node, data) {
@@ -155,17 +163,13 @@ function RemoveNode(node, data) {
     }
 }
 function findMinNode(node) {
-    if (node) {
-        while (node && node.left !== null) {
-            return node.left
-        }
-    }
-    return null
+    console.log(node.left)
+    return node.left ? findMinNode(node.left) : node
 }
 
 /* --------------------------------------------- */
 // 创建二叉树, 打印
-var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13]
+var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
 var binaryTree = new BinaryTree()
 nodes.forEach(data => {
     binaryTree.insert(data)
@@ -179,11 +183,16 @@ var root = binaryTree.root
 // 后序打印
 // binaryTree.back_order(root)
 
+// 打印高度
+// console.log(binaryTree.height())
+// 查找节点高度
+// console.log(binaryTree.nodeHeight(6))
+
 // 查找打印
 // console.log(binaryTree.min(root))
 // console.log(binaryTree.max(root))
-// console.log(binaryTree.search(4))
+// console.log(binaryTree.search(21))
 
 // 删除
-binaryTree.remove(3)
-console.log(root)
+// binaryTree.remove(10)
+console.log(JSON.stringify(root))
