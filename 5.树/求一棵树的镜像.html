@@ -1,0 +1,24 @@
+
+<html>
+    <div>求树的镜像</div>
+</html>
+
+<script type="module">
+import { BinaryTree } from './tree.js'
+var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
+var binaryTree = new BinaryTree()
+nodes.forEach(data => {
+    binaryTree.insert(data)
+})
+
+function mirror(node) {
+    if (node === null) return
+
+    [node.left, node.right] = [node.right, node.left]
+    mirror(node.left)
+    mirror(node.right)
+    return node
+}
+console.log(mirror(binaryTree.root))
+
+</script>
