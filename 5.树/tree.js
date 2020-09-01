@@ -188,11 +188,11 @@ function findMinNode(node) {
 
 /* --------------------------------------------- */
 // 创建二叉树, 打印
-// var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
-// var binaryTree = new BinaryTree()
-// nodes.forEach(data => {
-//     binaryTree.insert(data)
-// })
+var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
+var binaryTree = new BinaryTree()
+nodes.forEach(data => {
+    binaryTree.insert(data)
+})
 
 // 中序打印
 // var root = binaryTree.root

@@ -12,28 +12,24 @@ nodes.forEach(data => {
 })
 
 function in_order(node) {
-    var stack = [] // 存右孩子
+    // 使用栈存左边元素
+    var stack = []
 
-    while(node) {
-        if(node.right) {       // 处理右孩子
-            stack.push(node.right)
-        }
-
-        if(node.left) {        // 处理左孩子
-            if (!node.left.left){
-                // console.log(node.left.data)
-                // console.log(node.data)
-            } else {
+    while(node || stack.length) {
+        while(node) { // 核心：有左孩子, 中节点先入栈，后出栈打印
+            if(node) {       
+                stack.push(node)
                 node = node.left
             }
-        } else {
-            node = stack.pop() // 打印当前节点
         }
-        
+        // 先依次打印栈中元素(其实是中节点)，再处理右孩子
+        node = stack.pop()
+        console.log(node.data)
+        node = node.right // 左中节点都处理完，处理右孩子
     }
 }
 
-function pre_order(node) {
+function pre_order(node) { // 与中序比简单，因为栈不需要存中节点，只需要存右孩子
     // 使用栈存右边元素
     var stack = []
 
@@ -49,25 +45,64 @@ function pre_order(node) {
             node = stack.pop()
         }
     }
+
+
+    // if(node!=null){
+    //     stack.push(node);
+    // }
+    // while(stack.length!=0){
+    //     var temp = stack.pop();
+    //     console.log(temp.data)
+    //     //这里先放右边再放左边是因为取出来的顺序相反
+    //     if(temp.right!=null){
+    //         stack.push(temp.right);
+    //     }
+    //     if(temp.left!=null){
+    //         stack.push(temp.left);
+    //     }
+
+    // }
 }
 
-function back_order(node) {
-    // 使用栈存右边元素
+function back_order(node) { // 法一-比中前序难，用法较妙，先压右左中，通过一个数组unshift记录; 法二-加标记，处理方法同中序
+    // var stack = [] // 压栈顺序右左中
+    // var res = []   // 使用unshift存储数据
+    // stack.push(node)
+
+    // while(stack.length > 0){
+    //     let curNode = stack.pop()
+    //     res.unshift(curNode.data)
+
+    //     if(curNode.left){
+    //         stack.push(curNode.left)
+    //     }
+    //     if(curNode.right){
+    //         stack.push(curNode.right)
+    //     }
+    // }
+    // return res
+
+    var Tag = function(node, state){
+        this.node = node
+        this.state = state   // 0表示左边已经遍历结束, 1表示右边已经遍历结束
+    }
     var stack = []
-
-    while(node) {
-        if(node.right) {       // 处理右孩子
-            stack.push(node.right)
-        }
-
-        if(node.left) {        // 处理左孩子
+    while(node || stack.length){
+        while(node){
+            var tag = new Tag(node, 0)
+            stack.push(tag)
             node = node.left
-        } else {
-            node = stack.pop()
         }
 
-        console.log(node.data) // 打印当前节点
+        var curNode = stack.pop()
+        if(curNode.node.right && curNode.state === 0) {
+            curNode.state = 1
+            stack.push(curNode)
+            node = curNode.node.right
+        } else {
+            console.log(curNode.node.data)
+        }
     }
 }
-console.log(in_order(binaryTree.root))
+console.log(back_order(binaryTree.root))
 </script>
