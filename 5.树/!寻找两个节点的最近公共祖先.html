@@ -1,0 +1,32 @@
+
+<html>
+    <div>寻找两个节点的最近公共祖先</div>
+</html>
+
+<script type="module">
+import { BinaryTree } from './tree.js'
+var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
+var binaryTree = new BinaryTree()
+nodes.forEach(data => {
+    binaryTree.insert(data)
+})
+
+function nearest_ancestor(node, data1, data2) {
+    if(!node || node.data === data1 || node.data === data2) { // 核心：当node不存在了或者找到等于data的值返回，否则一直找
+        return node
+    }
+
+    var left = nearest_ancestor(node.left, data1, data2)
+    var right = nearest_ancestor(node.right, data1, data2)
+
+    if (left && right) { // 一个左一个右，返回node
+        return node
+    }
+    if (left) { // 在左边
+        return left
+    }
+    return right // 在右边
+}
+
+console.log(nearest_ancestor(binaryTree.root, 1, 6))
+</script>

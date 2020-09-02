@@ -1,0 +1,50 @@
+
+<html>
+    <div>输出指定层的节点个数</div>
+</html>
+
+<script type="module">
+import { BinaryTree } from './tree.js'
+var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
+var binaryTree = new BinaryTree()
+nodes.forEach(data => {
+    binaryTree.insert(data)
+})
+
+function get_Width(node, level) { // 核心：队列
+    var queue = [] // 队列
+    queue.push(node)
+    queue.push(0) // 核心：标志位
+
+    var num = 0
+    var map = []
+
+    if(node === null) {
+        return 0
+    }
+    while(queue.length) {
+        var curNode = queue.shift() // 出队
+
+        if(curNode === 0) { // 当前层结束, 打印str并清空
+            map.push(num)
+            num = 0
+        } else { // 同一层str拼接，并补0隔断
+            if(queue.indexOf(0) < 0) { // 核心：上一层0释放，到新周期则补0(只补一次，若有了就不补)
+                queue.push(0)
+            }
+            num += 1
+        }
+        
+        // 入队--有就入对列
+        if(curNode.left) { 
+            queue.push(curNode.left)
+        }
+        if(curNode.right) {
+            queue.push(curNode.right)
+        }
+    }
+    return map[level-1]
+}
+
+console.log(get_Width(binaryTree.root, 3))
+</script>
