@@ -1,0 +1,25 @@
+<html>
+    Top_k问题--
+    注：1亿个数，bitMap必须是不重复的数，如果是重复的数需要堆
+</html>
+
+<script type="module">
+import { minHeap } from './minHeap.js'
+
+var arr = [53, 17, 78, 9, 45, 65, 87, 23]
+var heap = new minHeap()
+heap.init(arr)
+// const arr1 = heap.print()
+// heap.print()
+// heap.insert(18)
+// heap.print()
+// heap.remove_min()
+// heap.print()
+// console.log(arr1)
+
+var newArr = []
+for (let i = 0; i < arr.length; i++) {
+    newArr.push(heap.remove_min())
+}
+console.log('newArr',newArr)
+</script>
