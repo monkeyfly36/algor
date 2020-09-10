@@ -1,14 +1,10 @@
-// 1.实现最小堆--左右孩子大小不关心，只要父节点小于左右孩子
-//   思路：总体自下而上，局部自上向下--先左右，后父子;
-//   注：只有堆顶有用，其余没用--查找最小值
-// 2.插入元素：将新的元素插入到最小堆中
-// 3.弹出堆顶：将最后一个元素替换堆顶，并删除最后一个元素-->shift_dowm，最后返回原堆顶
+// 参考最小堆实现
 
 var arr = [53, 17, 78, 9, 45, 65, 87, 23]
-// var minHeap = function () { // 打印用
-export const minHeap = function () {
+var maxHeap = function () { // 打印用
+// export const maxHeap = function () {
     var max_size, curr_size, heap 
-    // 传入一个数组,然后调整为最小堆
+    // 传入一个数组,然后调整为最大堆
     this.init = function(arr) {
         max_size = arr.length
         curr_size = max_size
@@ -25,7 +21,7 @@ export const minHeap = function () {
         }
         return heap
     }
-    // 将新元素插入最小堆中，思路：从下向上，与父节点关键码进行比较，对调--谁小谁上去，谁大谁下来(只与父节点比较)
+    // 将新元素插入最小堆中，思路：从下向上，与父节点关键码进行比较，对调--谁大谁上去，谁小谁下来(只与父节点比较)
     this.insert = function(item){
         // if (curr_size === max_size) { // 堆满了,不能再放元素
         //     return false
@@ -35,8 +31,8 @@ export const minHeap = function () {
         curr_size ++
         return true
     }
-    // 弹出堆顶，并重构最小堆
-    this.remove_min = function() { // 思路：让最个一个元素替换堆顶，其余位置均保持最小堆结构，shif_down此时堆顶
+    // 弹出堆顶，并重构最大堆
+    this.remove_max = function() { // 思路：让最个一个元素替换堆顶，其余位置均保持最大堆结构，shif_down此时堆顶
         if(curr_size <= 0){
             return null
         }
@@ -55,22 +51,22 @@ export const minHeap = function () {
     const shif_down = function(start, m){
         // 从start这个位置开始,向下下滑调整
         var parentIndex = start               // start就是当前这个局部的父节点
-        var minIndex = parentIndex*2 + 1      // 一定有左孩子,先让minIndex等于左孩子的索引
+        var childIndex = parentIndex*2 + 1      // 一定有左孩子,先让childIndex等于左孩子的索引
     
-        while(minIndex <= m){ // 先左右，后父子, m总个数
-            // minIndex+1是左孩子的索引, 左孩子大于右孩子 ？？？有必要，有的，最初堆左右孩子是没有大小区分的
-            if(minIndex < m && heap[minIndex] > heap[minIndex+1]){
-                minIndex = minIndex+1 // minIndex永远指向值小的那个孩子
+        while(childIndex <= m){ // 先左右，后父子, m总个数
+            // childIndex+1是左孩子的索引, 左孩子大于右孩子 ？？？有必要，有的，最初堆左右孩子是没有大小区分的
+            if(childIndex < m && heap[childIndex] < heap[childIndex+1]){
+                childIndex = childIndex+1 // childIndex永远指向值大的那个孩子
             }
-            // 父节点的值小于等于两个孩子的最小值
-            if(heap[parentIndex] <= heap[minIndex]){
+            // 父节点的值大于等于两个孩子的最大值
+            if(heap[parentIndex] >= heap[childIndex]){
                 break  // 循环结束,不需要再调整了
             }else{
-                // 父节点和最小子节点的值互换
-                [heap[parentIndex], heap[minIndex]] = [heap[minIndex], heap[parentIndex]]
+                // 父节点和最大子节点的值互换
+                [heap[parentIndex], heap[childIndex]] = [heap[childIndex], heap[parentIndex]]
                 // 继续向下
-                parentIndex = minIndex // 当前最小节点变为父节点
-                minIndex = 2*minIndex + 1 // 最小节点变为当前最小节点的左孩子
+                parentIndex = childIndex // 当前最大节点变为父节点
+                childIndex = 2*childIndex + 1 // 最大节点变为当前最大节点的左孩子
             }
         }
     }
@@ -80,9 +76,9 @@ export const minHeap = function () {
         var parentIndex = Math.floor((childIndex-1)/2)   // 找到父节点
     
         while(childIndex > 0) {
-            if(heap[parentIndex] < heap[childIndex]) { // 父节点更小,就不用调整了
+            if(heap[parentIndex] > heap[childIndex]) { // 父节点更大,就不用调整了
                 break
-            } else { // 父节点大于字节点, 交换位置, childIndex和parentIndex更新
+            } else { // 父节点小于子节点, 交换位置, childIndex和parentIndex更新
                 [heap[parentIndex], heap[childIndex]] = [heap[childIndex], heap[parentIndex]]
                 childIndex = parentIndex
                 parentIndex = Math.floor((childIndex-1)/2)
@@ -91,10 +87,10 @@ export const minHeap = function () {
     }
 }
 
-// var minHeap = new minHeap()
-// minHeap.init(arr)
-// minHeap.print(heap)
-// minHeap.insert(18)
-// minHeap.print(heap)
-// console.log(minHeap.remove_min())
-// minHeap.print(heap)
+var maxHeap = new maxHeap()
+maxHeap.init(arr)
+maxHeap.print()
+maxHeap.insert(25)
+maxHeap.print()
+console.log(maxHeap.remove_max())
+maxHeap.print()

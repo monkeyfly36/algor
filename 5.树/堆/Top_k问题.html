@@ -1,0 +1,24 @@
+<html>
+    Top_k问题--一个非常大的数据集合有n个整数，求集合中最大的k个值
+    注：1亿个数，bitMap必须是不重复的数，如果是重复的数需要堆
+    思路：初始化一个大小为k的最小堆,将剩余的元素与堆顶比较，若大于堆顶，则删除堆顶，插入该元素
+
+    注：实现topK三种方法：1.快排，2.分而治之，3.最小(大)堆
+</html>
+
+<script type="module">
+import { minHeap } from './minHeap.js'
+var arr = [53, 17, 78, 9, 45, 65, 87, 23]
+// 例：找出最大的3个数-->新建长度为3的最小堆
+var arrK = arr.splice(0,3)
+var heap = new minHeap()
+heap.init(arrK)
+// 剩余元素与最小堆比较
+for (let i = 3; i < arr.length; i++) {
+    if (arr[i] > heap.get_min()) {
+        heap.remove_min()
+        heap.insert(arr[i])
+    } 
+}
+console.log('newArr',heap.print())
+</script>

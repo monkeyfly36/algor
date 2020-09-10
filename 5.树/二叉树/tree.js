@@ -182,7 +182,6 @@ function RemoveNode(node, data) {
     }
 }
 function findMinNode(node) {
-    console.log(node.left)
     return node.left ? findMinNode(node.left) : node
 }
 

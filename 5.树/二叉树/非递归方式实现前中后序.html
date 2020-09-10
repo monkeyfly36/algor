@@ -12,7 +12,7 @@ nodes.forEach(data => {
 })
 
 function in_order(node) {
-    // 使用栈存左边元素
+    // 处理左子树，使用栈存中间元素
     var stack = []
 
     while(node || stack.length) {
@@ -25,7 +25,7 @@ function in_order(node) {
         // 先依次打印栈中元素(其实是中节点)，再处理右孩子
         node = stack.pop()
         console.log(node.data)
-        node = node.right // 左中节点都处理完，处理右孩子
+        node = node.right // 左中节点都处理完，处理右孩子，若右孩子为null继续pop
     }
 }
 
