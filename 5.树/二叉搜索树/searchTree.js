@@ -73,22 +73,28 @@ const deleteNode = function(node, data) {
 
     if(data == node.data) {
         // 三种情况， 无左右孩子，有左或右孩子，有左和右孩子
-        if (node.left === null && !node.right === null) {
+        if (node.left === null && node.right === null) {
             node = null
-            return node
+            return
         } 
         // 第二种
+        var parent = node.parent
         if (node.left === null) {
-            node.right.parent = node.parent
-            node = node.right
+            link_parent(parent, node, node.right)
+            node.right.parent = parent
         }
         if (node.right === null) {
-            node.left.parent = node.parent
-            node = node.left
+            link_parent(parent, node, node.left)
+            node.left.parent = parent
         }
         // 第三种
-        if (node.left && node.right) { // 找右孩子中序遍历的第一个元素
-            var temNode = findMinNode(node)
+        if (node.left && node.right) { // 找右孩子中序遍历的第一个元素, 与tree做比较不同
+            var temp = node.right
+            while(temp.left) {
+                temp = temp.left
+            }
+            node.data = temp.data // 获取右树最小值
+            deleteNode(node.right, temp.data) // 删除此节点
         }
     } else if (data < node.data) {
         deleteNode(node.left, data)
@@ -96,10 +102,18 @@ const deleteNode = function(node, data) {
         deleteNode(node.right, data)
     }
 }
-const findMinNode = function(node) {
+function link_parent(parent, node, nextNode) {
+    if (parent === null) {
+        root = nextNode
+        root.parent = null
+    }
 
+    if (parent.left && parent.left.data === node.data) {
+        parent.left = nextNode
+    } else {
+        parent.right = nextNode
+    }
 }
-
 
 var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13, 11]
 var searchTree = new SearchTree()
@@ -107,5 +121,6 @@ nodes.forEach(data => {
     searchTree.insert(data)
 })
 
-// console.log(searchTree.print())
 // console.log(searchTree.search(11))
+console.log(searchTree.delete(14))
+console.log(searchTree.print())
