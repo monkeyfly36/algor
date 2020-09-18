@@ -9,7 +9,7 @@
 // 核心：只当索引，相交，父元素(第一个)值为集合个数的负数，子元素值为父元素的索引
 // 以朋友圈为例
 // export const UFSet = function() {
-const UFSet = function() {
+export const UFSet = function() {
     var parent = []
 
     this.init = function(size){

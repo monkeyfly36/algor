@@ -1,11 +1,13 @@
-// 散列--音译是哈希， java中叫hashTable, c++叫map
+// 散列--音译是哈希， java中叫hashTable, c++叫map。
+// 特点：查找O(1), key--int, value--链表
 // 用数组可以实现栈，队列，堆，并查集，散列表，散列表是一种改进的字典
 // 数组中的索引都是整数，而你使用的关键码可能是一个字符串--hash函数
-// 数组中的索引超出了数组索引范围--除留余数法 hash(key) = key%p （找一个小于等于m的质数p作为除数）
+// 数组中的索引超出了数组索引范围--除留余数法 hash(key) = key%p （!找一个小于等于m的质数p作为除数）
 
 // 链表可伸缩，数组不可自由伸缩
 // 处理冲突--真正的冲突不是hash函数造成的，而是除留余数法导致的->最有效的办法是采用开散列方法,存链表
 
+const LinkList = require("./linkList")
 // export const hashTable = function() {
 const hashTable = function() {
     var items = []         // 存储数据
@@ -32,7 +34,7 @@ const hashTable = function() {
         items = new Array(size)
         // 初始化数组
         for(var i=0;i< size;i++){
-            items[i] = new LinkList()
+            items[i] = new LinkList.LinkList()
         }
         // 设置除数
         var temp = size;
@@ -61,6 +63,11 @@ const hashTable = function() {
             items[index].append(key, value)
             key_count++
         }
+
+        // 如果过于拥挤了就扩容
+        if(is_too_crowd()) {
+            this.expand()
+        }
     }
     this.del_key = function(key){
         var index = get_index(key)
@@ -78,150 +85,50 @@ const hashTable = function() {
         }
         return false
     }
+    // 扩容--加入 key_count/divisor > 5(可以自己定)，就认为太拥挤。简单说就是init时size设小了
+    var is_too_crowd = function() {
+        if(Math.floor(key_count / divisor) >= 5){
+            return true
+        }
+        return false
+    }
+    this.expand = () => {
+        // 临时数组保存原来的数据
+        var tmp_arr = new Array(items.length)
+        for(var i = 0; i < items.length; i++) {
+            tmp_arr[i] = items[i]
+        }
+
+        // 初始化数组
+        items = new Array(items.length * 2)
+        for(var i = 0; i < items.length; i++) {
+            items[i] = new LinkList.LinkList()
+        }
+        
+        // 设置除数
+        var temp = items.length
+        while(temp > 2) {
+            if(is_Prime(temp)){
+                divisor = temp
+                break
+            }
+            temp--
+        }
+
+        // 把临时数组里的数据导入到items中
+        for(var i =0; i < tmp_arr.length; i++) {
+            var link = tmp_arr[i]
+            // 获得链表的头
+            var curr_node = link.get_head()
+            while(curr_node) {
+                this.set(curr_node.key, curr_node.value)
+                key_count--
+                curr_node = curr_node.next
+            }
+        }
+    }
 }
 
-function LinkList(){
-    // 定义节点
-    var Node = function(key, value){
-        this.key = key;
-        this.value = value;
-        this.next = null;
-    };
-
-    var length = 0;        // 长度
-    var head = null;       // 头节点
-    var tail = null;       // 尾节点
-
-    // 添加一个新元素
-    this.append = function(key, value){
-        if(this.search(key) != null){
-            return false;
-        }
-        // 创建新节点
-        var node = new Node(key, value);
-        // 如果是空链表
-        if(head==null){
-            head = node;
-            tail = head;
-        }else{
-            tail.next = node;       // 尾节点指向新创建的节点
-            tail = node;            // tail指向链表的最后一个节点
-        }
-        length += 1;                // 长度加1
-        return true;
-    };
-
-    // 返回链表大小
-    this.length = function(){
-        return length;
-    };
-
-    // 获得指定位置的节点
-    var get_node = function(index){
-        if(index < 0 || index >= length){
-            return null;
-        }
-        var curr_node = head;
-        var node_index = index;
-        while(node_index-- > 0){
-            curr_node = curr_node.next;
-        }
-        return curr_node;
-    };
-
-    // 删除指定位置的节点
-    this.remove = function(index){
-        // 参数不合法
-        if(index < 0 || index >= length){
-            return null;
-        }else{
-            var del_node = null;
-            // 删除的是头节点
-            if(index == 0){
-                // head指向下一个节点
-                del_node = head;
-                head = head.next;
-                // 如果head == null,说明之前链表只有一个节点
-                if(!head){
-                    tail = null;
-                }
-            }else{
-                // 找到索引为index-1的节点
-                var pre_node = get_node(index-1);
-                del_node = pre_node.next;
-                pre_node.next = pre_node.next.next;
-                // 如果删除的是尾节点
-                if(del_node.next==null){
-                    tail = pre_node;
-                }
-            }
-
-            length -= 1;
-            del_node.next = null;
-            return del_node;
-        }
-    };
-
-    // 返回指定位置节点的值
-    this.get = function(index){
-        var node = get_node(index);
-        if(node){
-            return node;
-        }
-        return null;
-    };
-
-    this.search = function(key){
-        var index = -1;
-        var curr_node = head;
-        while(curr_node){
-            index += 1;
-            if(curr_node.key == key){
-                return curr_node;
-            }else{
-                curr_node = curr_node.next;
-            }
-        }
-        return null;
-    };
-
-    this.remove_key = function(key){
-        var index = this.indexOf(key);
-        if(index >=0){
-            this.remove(index);
-            return true;
-        }
-        return false;
-    };
-
-    this.indexOf = function(key){
-        var index = -1;
-        var curr_node = head;
-        while(curr_node){
-            index += 1
-            if(curr_node.key == key){
-                return index;
-            }else{
-                curr_node = curr_node.next;
-            }
-        }
-        return -1;
-    };
-
-    // isEmpty
-    this.isEmpty = function(){
-        return length == 0;
-    };
-
-    // 返回链表大小
-    this.length = function(){
-        return length;
-    };
-    // 返回链表的头节点
-    this.get_head = function(){
-        return head;
-    };
-}
 function murmurhash3_32_gc(key, seed) {
     var remainder, bytes, h1, h1b, c1, c1b, c2, c2b, k1, i;
 
@@ -279,5 +186,7 @@ hash.set(11,'2')
 hash.set(4,'12')
 console.log(hash.haskey(4))
 
-// 性能优化--1.使用搜索树 2.扩容
+// 性能优化--1.使用AVL搜索树(有点麻烦) 2.扩容(推荐)
 
+// 虽然扩容可以解决拥挤问题，但是如果数据量非常的大，在扩容过程中，耗费的时间就会很长，这样就会影响到下一次的set或者get操作，
+// 请你设计一种方案，可以平滑的进行扩容，即便数据量很大，也不至于阻塞太久，影响后面的操作

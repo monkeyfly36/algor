@@ -1,4 +1,5 @@
 // 比较与二叉树区别，多了parent--链表
+// 特点：查找O(log2N)
 
 var TreeNode = function(data){
     this.data = data

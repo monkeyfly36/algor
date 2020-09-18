@@ -1,5 +1,5 @@
 // Node新增key， 链表新增search(key), remove_key(key)
-function LinkList(){
+const LinkList = function() {
     // 定义节点
     var Node = function(key, value){
         this.key = key;
@@ -142,4 +142,4 @@ function LinkList(){
     };
 };
 
-exports.LinkList = LinkList;
+module.exports = { LinkList }

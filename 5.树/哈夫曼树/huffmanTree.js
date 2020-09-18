@@ -1,7 +1,7 @@
 // PL--根节点到每一个节点的路径长度之和; WPL--外节点的值与该节点到根节点路径长度的乘积
 // 应用： 编码--在通信领域，经过哈夫曼编码的的信息小于大量冗余数据，提高传输效率，是重要的数据压缩方法
 
-// 思路： 通过最小堆，找出最小两个数弹出，将这两数之和组成一新元素插入最下堆，循环至最终堆顶为哈夫曼树的根节点
+// 思路： 通过最小堆，找出最小两个数弹出，将这两数之和组成一新元素插入最小堆，循环至最终堆顶为哈夫曼树的根节点
 
 // 编码
 var CodeNode = function(code, rate){
@@ -99,8 +99,7 @@ function MinHeap(size){
                 min_child_index = 2*min_child_index + 1;
             }
         }
-
-    };
+    }
 
     // 传入一个数组,然后调整为最小堆
     this.init = function(arr){
@@ -117,7 +116,7 @@ function MinHeap(size){
             shif_down(curr_pos, curr_size-1);        // 局部自上向下下滑调整
             curr_pos -= 1;                           // 调整下一个分支节点
         }
-    };
+    }
 
     var shif_up = function(start){
         var child_index = start;         // 当前节点是叶节点
@@ -137,7 +136,7 @@ function MinHeap(size){
                 parent_index = Math.floor((parent_index-1)/2);
             }
         }
-    };
+    }
 
     this.insert = function(item){
         // 插入一个新的元素
@@ -150,7 +149,7 @@ function MinHeap(size){
         shif_up(curr_size);
         curr_size++;
         return true;
-    };
+    }
 
     //删除最小值
     this.remove_min = function(){
@@ -162,15 +161,15 @@ function MinHeap(size){
         curr_size--;
         shif_down(0, curr_size-1);
         return min_value;
-    };
+    }
 
     this.size = function(){
         return curr_size;
-    };
+    }
 
     this.print = function(){
         console.log(heap);
-    };
+    }
 };
 
 var huffman_tree = new huffmanTree();

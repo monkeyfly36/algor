@@ -1,4 +1,5 @@
 // 注：BitMap只能存储表示某个数是否存在，可以用于大数据去重，大数据排序，两个集合取交集
+// 核心：数组index--商，value--余数
 
 // 题：bitmap实现add和isExit方法
 export const BitMap = function (size) {
