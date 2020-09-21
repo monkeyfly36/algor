@@ -45,88 +45,88 @@ const Graph = function() {
         for(var i = 0;i < node_num;i++){
             for(var j = i+1; j< node_num;j++){
                 if(maps[i][j]>0 && maps[i][j]<max_value){
-                    count++
+                    count++;
                 }
             }
         }
-        console.log(count)
-        return count
+        return count;
     };
     // 获得边的权重
     this.get_weight = function(u, v){
-        return maps[u][v]
-    }
+        return maps[u][v];
+    };
 
     // 连通图--深度优先遍历
-    var graph_dfs = function(v, visited, component) { // component 连通分量
-        visited[v] = 1   //表示v已经访问过
-        console.log(v)
-        component.push(v)
-        var row = maps[v]
+    var graph_dfs = function(v, visited, component){
+        visited[v] = 1;   //表示v已经访问过
+        console.log(v);
+        component.push(v);
+        var row = maps[v];
         for(var i=0; i<row.length;i++){
-            if(row[i] < max_value && visited[i] == 0){
-                // v与i 是连通的,且i还没有被遍历过
-                graph_dfs(i, visited, component)
+            if(row[i]<max_value && visited[i]==0){
+                // v 与i 是连通的,且i还没有被遍历过
+                graph_dfs(i, visited, component);
             }
         }
-    }
+    };
     //从顶点v开始深度优先遍历图
     this.dfs = function(v){
-        var visited = new Array(node_num)
-        var component = []   // 存储连通分量
-        for(var i = 0; i < node_num; i++){
-            visited[i] = 0
+        var visited = new Array(node_num);
+        var component = [];   //存储连通分量
+        for(var i=0;i<node_num;i++){
+            visited[i] = 0;
         }
-        graph_dfs(v, visited, component)
-        return component
+        graph_dfs(v, visited, component);
+        return component;
     }
     // 连通图--广度优先遍历
     var graph_bfs = function(v, visited, component){
-        var queue = new Queue()
-        queue.enqueue(v)
-        visited[v] = 1   //表示v已经访问过
-        console.log(v)
-        component.push(v)
+        var queue = new Queue.Queue();
+        queue.enqueue(v);
+        visited[v] = 1;   //表示v已经访问过
+        console.log(v);
+        component.push(v);
         while(!queue.isEmpty()){
-            var visited_v = queue.dequeue()
-            var row = maps[visited_v]
-            for(var i = 0; i < row.length; i++){
-                if(row[i] < max_value && visited[i]==0){
+            var visited_v = queue.dequeue();
+            var row = maps[visited_v];
+            for(var i=0; i<row.length;i++){
+                if(row[i]<max_value && visited[i]==0){
                     // v 与i 是连通的,且i还没有被遍历过
-                    queue.enqueue(i)
-                    visited[i] = 1   //表示v已经访问过
-                    console.log(i)
-                    component.push(i)
+                    queue.enqueue(i);
+                    visited[i] = 1;   //表示v已经访问过
+                    console.log(i);
+                    component.push(i);
                 }
             }
         }
-    }
+    };
+
     this.bfs = function(v){
-        var visited = new Array(node_num)
-        var component = []
-        for(var i = 0; i < node_num; i++) {
-            visited[i] = 0
+        var visited = new Array(node_num);
+        var component = [];
+        for(var i=0;i<node_num;i++){
+            visited[i] = 0;
         }
-        graph_bfs(v, visited, component)
-        return component
-    }
+        graph_bfs(v, visited, component);
+        return component;
+    };
     // 连通分量--遍历整张图
     this.components = function(){
-        var visited = new Array(node_num)
-        var component_lst = []
-        for(var i = 0; i < node_num; i++){
-            visited[i] = 0
+        var visited = new Array(node_num);
+        var component_lst = [];
+        for(var i=0;i<node_num;i++){
+            visited[i] = 0;
         }
 
-        for(var i = 0; i < node_num; i++){
-            if(visited[i] === 0){
-                var component = []
+        for(var i=0;i<node_num;i++){
+            if(visited[i]==0){
+                var component = [];
                 graph_bfs(i, visited, component)
-                component_lst.push(component)
+                component_lst.push(component);
             }
         }
-        return component_lst
-    }
+        return component_lst;
+    };
     // 应用--1.最小生成树 权值之和最小的那棵生成树
 }
 

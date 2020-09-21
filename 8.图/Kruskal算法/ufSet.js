@@ -19,7 +19,7 @@ const UFSets = function() {
         }
     }
     this.find = function(item) {
-        while(parent[item] >=0) {
+        while(parent[item] >= 0) {
             item = parent[item]
         }
         return item
@@ -30,30 +30,30 @@ const UFSets = function() {
     }
 
     //建立朋友关系
-    this.build_relation = function(i, j) {
-        var root1 = this.find(i)
-        var root2 = this.find(j)
-        // 不在同一个集合中,就合并到一起
-        if(root1 != root2) {
-            this.union(root1, root2)
-        }
-    }
+    // this.build_relation = function(i, j) {
+    //     var root1 = this.find(i)
+    //     var root2 = this.find(j)
+    //     // 不在同一个集合中,就合并到一起
+    //     if(root1 != root2) {
+    //         this.union(root1, root2)
+    //     }
+    // }
     // 是不是朋友
-    this.is_friend = function(i, j) {
-        var root1 = this.find(i)
-        var root2 = this.find(j)
-        return root1 == root2
-    }
+    // this.is_friend = function(i, j) {
+    //     var root1 = this.find(i)
+    //     var root2 = this.find(j)
+    //     return root1 == root2
+    // }
     // 朋友圈个数
-    this.get_friend_group_count = function() {
-        var count = 0
-        for(var i= 0; i < parent.length; i++) {
-            if(parent[i]<0){
-                count++
-            }
-        }
-        return count
-    }
+    // this.get_friend_group_count = function() {
+    //     var count = 0
+    //     for(var i= 0; i < parent.length; i++) {
+    //         if(parent[i]<0){
+    //             count++
+    //         }
+    //     }
+    //     return count
+    // }
 }
 
 // var friends = [

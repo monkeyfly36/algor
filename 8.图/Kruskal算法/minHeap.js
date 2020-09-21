@@ -10,12 +10,12 @@ function MinHeap(size){
 
         while(min_child_index <= m){
             // min_child_index+1 是左孩子的索引, 左孩子大于右孩子
-            if(min_child_index < m && heap[min_child_index] > heap[min_child_index+1]){
+            if(min_child_index < m && heap[min_child_index].cost > heap[min_child_index+1].cost){
                 min_child_index = min_child_index+1;  // min_child_index永远指向值小的那个孩子
             }
 
             // 父节点的值小于等于两个孩子的最小值
-            if(heap[parent_index] <= heap[min_child_index]){
+            if(heap[parent_index].cost <= heap[min_child_index].cost){
                 break;   // 循环结束,不需要再调整了
             }else{
                 // 父节点和子节点的值互换
@@ -49,10 +49,9 @@ function MinHeap(size){
         var child_index = start;         // 当前节点是叶节点
         var parent_index = Math.floor((child_index-1)/2);   // 找到父节点
 
-
         while(child_index > 0){
             // 父节点更小,就不用调整了
-            if(heap[parent_index] <= heap[child_index]){
+            if(heap[parent_index].cost <= heap[child_index].cost){
                 break;
             }else{
                 // 父节点和子节点的值互换
