@@ -1,4 +1,5 @@
-// 理想情况下，快排最快，算法复杂度O(nlog2n)
+// 问：快排是不是最快的
+// 答：理想情况下，快排最快，算法复杂度O(nlog2n)
 // 注：如果数组已经是有序的，使用快排O(n2),不是最快的，是最慢的;
 // 当序列长度在5到25之间时，直接插入排序的速度比快速排序快至少10%, 插入排序见3
 
@@ -40,7 +41,7 @@ function partition(arr, start, end){
 function quick_sort_ex(arr, start, end){
     if(start < end){
         if(end-start <=25){
-            insert_sort(arr, start, end);
+            partition(arr, start, end);
         }else {
             var pivotpos = partition(arr, start, end);
             quick_sort_ex(arr, start, pivotpos - 1);
