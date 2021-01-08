@@ -1,4 +1,5 @@
 // 二叉树
+// 定义: 节点的值大于left所有的值，小于right所有的值
 
 // 定义节点
 function Node(data) {

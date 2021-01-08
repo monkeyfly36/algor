@@ -1,6 +1,6 @@
 /*
   前序: 自 -> left -> right  leetcode 144. 二叉树的前序遍历
-  中序: left -> 自 -> right            94. 二叉树的中序遍历
+  中序: left -> 自 -> right            94. 二叉树的中序遍历 --- 二叉搜索树从小到大排序
   后序: left -> right -> 自           145. 二叉树的后序遍历
 */
 // 前序 - 递归
@@ -94,7 +94,7 @@ var postorderTraversal = function(root) { // 1.打标记;2.巧解
 
   /* **************************************** */
 
-  let stack = [] // 压栈顺序右左中
+  let stack = [] // 入栈顺序-左右中 出栈顺序-中右左
   let res = []   // 使用unshift存储数据
   if(!root) return res
   let cur = root
@@ -111,4 +111,4 @@ var postorderTraversal = function(root) { // 1.打标记;2.巧解
       }
   }
   return res
-};
+}

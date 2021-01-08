@@ -14,7 +14,7 @@ var fib = function(n) {
   // return fib(n-1) + fib(n-2)
 
   // 递推，缓存优化--数学概念a[n]=a[n-1]+a[n-2]，区别递归是计算机概念复用一段代码
-  // 复杂度O(n)
+  // 时间复杂度O(n)，空间O(n)
   var cache = []
   // for(let i = 0; i <= n; i++) {
   //   if (i === 0 || i === 1) {
@@ -25,7 +25,7 @@ var fib = function(n) {
   // }
   // return cache[n] 
 
-  // 动态规划
+  // 动态规划 空间O(1)
   let p, q = 0
   let r = 1
   for(let i = 0; i <= n; i++) {
