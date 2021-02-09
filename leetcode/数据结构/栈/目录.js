@@ -17,3 +17,4 @@ var simplifyPath = function(path) {
   return '/' + stack.join('/')
 }
 console.log(simplifyPath("/a/../../b/../c//.//"))
+console.log(simplifyPath("/a/b/.././c"))
